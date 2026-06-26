@@ -1,17 +1,31 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { waLink } from "@/lib/data";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * The opening frame of the film. The tyre owns the viewport — the type
- * sits low and quiet, like a title card over the first shot.
+ * The opening frame of the film. On desktop the tyre owns the viewport via
+ * the 3D scene behind; on mobile (no WebGL) a real product photo stands in.
  */
-export function Hero({ ready }: { ready: boolean }) {
+export function Hero({ ready, isMobile }: { ready: boolean; isMobile: boolean }) {
   return (
     <section id="home" className="relative flex h-screen flex-col justify-end">
+      {isMobile && (
+        <div className="absolute inset-0 -z-10" aria-hidden>
+          <Image
+            src="/images/products/jadeforce-zm209.jpeg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" />
+        </div>
+      )}
       <div className="mx-auto w-full max-w-[1400px] px-6 pb-16 lg:px-12">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <div>

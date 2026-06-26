@@ -31,9 +31,10 @@ export default function Experience() {
   const canvasWrap = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  /* Lenis smooth scroll, driven by GSAP's ticker so ScrollTrigger stays in sync */
+  /* Lenis smooth scroll — desktop only. On phones it fights native touch
+     scrolling and, combined with the 3D repaint, causes the hang. */
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || isMobile) return;
     const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1.05 });
     lenis.on("scroll", ScrollTrigger.update);
     const raf = (time: number) => lenis.raf(time * 1000);
@@ -43,10 +44,11 @@ export default function Experience() {
       gsap.ticker.remove(raf);
       lenis.destroy();
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, isMobile]);
 
-  /* one master trigger converts the cinematic track into scene progress */
+  /* master trigger that feeds the cinematic 3D scene — desktop only */
   useEffect(() => {
+    if (isMobile) return;
     const st = ScrollTrigger.create({
       trigger: trackRef.current,
       start: "top top",
@@ -72,36 +74,39 @@ export default function Experience() {
       fade.scrollTrigger?.kill();
       fade.kill();
     };
-  }, []);
+  }, [isMobile]);
 
-  /* normalised cursor for the parallax rig */
+  /* normalised cursor for the parallax rig — desktop only */
   useEffect(() => {
+    if (isMobile) return;
     const onMove = (e: PointerEvent) => {
       pointerState.x = (e.clientX / window.innerWidth) * 2 - 1;
       pointerState.y = -((e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
       <Preloader onComplete={() => setReady(true)} reducedMotion={reducedMotion} />
       <Navbar ready={ready} />
 
-      {/* the fixed showroom — every scroll-story chapter plays over this */}
-      <div
-        ref={canvasWrap}
-        className="pointer-events-none fixed inset-0 z-0"
-        aria-hidden
-      >
-        {ready && <Scene isMobile={isMobile} reducedMotion={reducedMotion} />}
-      </div>
+      {/* the fixed showroom — desktop only; never mounted on phones */}
+      {!isMobile && (
+        <div
+          ref={canvasWrap}
+          className="pointer-events-none fixed inset-0 z-0"
+          aria-hidden
+        >
+          {ready && <Scene isMobile={isMobile} reducedMotion={reducedMotion} />}
+        </div>
+      )}
 
       <main className="relative z-10">
         <div ref={trackRef}>
-          <Hero ready={ready} />
-          <StoryChapters />
+          <Hero ready={ready} isMobile={isMobile} />
+          <StoryChapters isMobile={isMobile} />
         </div>
 
         <Stats />
