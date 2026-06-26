@@ -38,7 +38,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 }
 
 /**
- * The first light section — the page steps out of the cinema into print.
+ * The first light section, the page steps out of the cinema into print.
  */
 export function Stats() {
   return (

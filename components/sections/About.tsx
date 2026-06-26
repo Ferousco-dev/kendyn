@@ -14,7 +14,7 @@ const PILLARS = [
   {
     n: "02",
     title: "Performance",
-    desc: "Tyres matched to your vehicle, your load and Nigerian roads — fitted and balanced by machine, not guesswork.",
+    desc: "Tyres matched to your vehicle, your load and Nigerian roads, fitted and balanced by machine, not guesswork.",
   },
   {
     n: "03",
@@ -52,13 +52,13 @@ export function About() {
               Kendyn Batteries and Tyres Ltd began with that simple conviction.
               Today, from our base on Oba Erinwole Road in Sagamu, we supply
               batteries sourced from Korea, Malaysia, Turkey, China and India —
-              including Korea-Tech lines — and tyres from China, Thailand and
+              including Korea-Tech lines, and tyres from China, Thailand and
               India for everything from passenger cars to trucks, trailers,
               tractors and Caterpillar equipment.
             </p>
             <p>
               Every product is backed by free diagnostics, professional fitting
-              and warranties we actually honour — since 2010.
+              and warranties we actually honour, since 2010.
             </p>
           </motion.div>
         </div>

@@ -8,7 +8,8 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * The opening frame of the film. On desktop the tyre owns the viewport via
- * the 3D scene behind; on mobile (no WebGL) a real product photo stands in.
+ * the 3D scene behind; on mobile (no WebGL) a real product photo stands in,
+ * darkened so the type reads as a cinematic title card.
  */
 export function Hero({ ready, isMobile }: { ready: boolean; isMobile: boolean }) {
   return (
@@ -21,11 +22,15 @@ export function Hero({ ready, isMobile }: { ready: boolean; isMobile: boolean })
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[64%_38%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" />
+          {/* heavy, even darkening so the label recedes into texture */}
+          <div className="absolute inset-0 bg-ink/60" />
+          {/* deepen the lower third where the type sits */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-transparent" />
         </div>
       )}
+
       <div className="mx-auto w-full max-w-[1400px] px-6 pb-16 lg:px-12">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -33,9 +38,9 @@ export function Hero({ ready, isMobile }: { ready: boolean; isMobile: boolean })
               initial={{ opacity: 0 }}
               animate={ready ? { opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 2.2 }}
-              className="label mb-6 text-smoke"
+              className="label mb-6 text-steel"
             >
-              Kendyn Batteries &amp; Tyres Ltd — Sagamu, Nigeria
+              Kendyn Batteries &amp; Tyres Ltd, Sagamu, Nigeria
             </motion.p>
 
             <h1 className="font-display text-5xl font-medium leading-[1.02] text-paper md:text-6xl lg:text-7xl">
@@ -68,9 +73,9 @@ export function Hero({ ready, isMobile }: { ready: boolean; isMobile: boolean })
             transition={{ duration: 0.9, delay: 2.9, ease: EASE }}
             className="lg:max-w-xs lg:pb-2"
           >
-            <p className="text-sm leading-relaxed text-smoke">
+            <p className="text-sm leading-relaxed text-steel">
               Tyres for articulated vehicles and cars. Batteries from six
-              nations. Industrial tools — supplied, fitted and guaranteed.
+              nations. Industrial tools. Supplied, fitted and guaranteed.
             </p>
             <div className="mt-7 flex items-center gap-7">
               <a
@@ -92,7 +97,6 @@ export function Hero({ ready, isMobile }: { ready: boolean; isMobile: boolean })
         </div>
       </div>
 
-      {/* scroll cue */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}

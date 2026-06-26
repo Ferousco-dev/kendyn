@@ -201,7 +201,7 @@ export function Products() {
           </AnimatePresence>
         </motion.div>
 
-        {/* the shelf itself — client's real stock wall */}
+        {/* the shelf itself, client's real stock wall */}
         {tab === "battery" && (
           <motion.figure
             initial={{ opacity: 0, y: 24 }}
@@ -213,14 +213,14 @@ export function Products() {
             <div className="relative aspect-[16/7] w-full overflow-hidden bg-paper-2">
               <Image
                 src="/images/products/battery-brands.jpeg"
-                alt="Battery brands in stock at the Kendyn showroom — KDD, C-Royal, Synergy, Rocket, GBM, Hi-Force, I.M.P and Gales"
+                alt="Battery brands in stock at the Kendyn showroom, KDD, C-Royal, Synergy, Rocket, GBM, Hi-Force, I.M.P and Gales"
                 fill
                 sizes="100vw"
                 className="object-cover"
               />
             </div>
             <figcaption className="mt-4 flex flex-col justify-between gap-1 md:flex-row">
-              <span className="label text-ash">On the shelf — photographed at the showroom</span>
+              <span className="label text-ash">On the shelf, photographed at the showroom</span>
               <span className="font-mono text-xs text-ash">
                 KDD · C-Royal · Synergy · Rocket · GBM · Hi-Force · I.M.P · Gales
               </span>

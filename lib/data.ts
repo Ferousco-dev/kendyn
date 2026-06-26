@@ -70,11 +70,11 @@ export const PRODUCTS: Product[] = [
     id: "rocket-85d26l",
     category: "battery",
     name: "Rocket SMF 85D26L",
-    tagline: "The Korean original — quiet, sealed, relentless",
+    tagline: "The Korean original, quiet, sealed, relentless",
     highlight: "Korea",
     specs: [
       { label: "Capacity", value: "12V 80 Ah" },
-      { label: "Terminal", value: "L — left layout" },
+      { label: "Terminal", value: "L, left layout" },
       { label: "Origin", value: "Korea" },
       { label: "Type", value: "Sealed MF" },
     ],
@@ -130,7 +130,7 @@ export const PRODUCTS: Product[] = [
     image: "/images/products/jadeforce-zm209.jpeg",
     specs: [
       { label: "Size", value: "315/80 R22.5" },
-      { label: "Pattern", value: "Lug — drive axle" },
+      { label: "Pattern", value: "Lug, drive axle" },
       { label: "Origin", value: "China" },
       { label: "Duty", value: "On / off road" },
     ],
@@ -183,7 +183,7 @@ export const PRODUCTS: Product[] = [
     highlight: "108 pc",
     specs: [
       { label: "Pieces", value: "108" },
-      { label: "Drives", value: "1/4 – 1/2\"" },
+      { label: "Drives", value: "1/4 to 1/2\"" },
       { label: "Steel", value: "Cr-V" },
       { label: "Finish", value: "Mirror chrome" },
     ],
@@ -205,7 +205,7 @@ export const SERVICES = [
   },
   {
     title: "Fleet & Corporate Supply",
-    desc: "Volume supply programmes for logistics fleets, factories and government — with scheduled servicing.",
+    desc: "Volume supply programmes for logistics fleets, factories and government, with scheduled servicing.",
   },
   {
     title: "Inverter & Solar Power Systems",
@@ -245,7 +245,7 @@ export const TESTIMONIALS = [
   },
   {
     quote:
-      "The alignment and balancing service is world class. My steering has never felt this precise — and I drive a German car that's picky about everything.",
+      "The alignment and balancing service is world class. My steering has never felt this precise, and I drive a German car that's picky about everything.",
     name: "Tunde K.",
     role: "Engineer, Abeokuta",
   },

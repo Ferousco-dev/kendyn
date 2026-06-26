@@ -61,7 +61,7 @@ export function Contact() {
             <div className="flex gap-12">
               <div>
                 <p className="label text-ash">Hours</p>
-                <p className="mt-3 text-sm text-ink">Mon – Sat · 8:00 — 18:00</p>
+                <p className="mt-3 text-sm text-ink">Mon to Sat · 8:00 to 18:00</p>
               </div>
               <div>
                 <p className="label text-ash">WhatsApp</p>
@@ -89,7 +89,7 @@ export function Contact() {
               Get a quote in minutes.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ash">
-              Fill this in and it opens straight into WhatsApp — we reply fast.
+              Fill this in and it opens straight into WhatsApp, we reply fast.
             </p>
 
             <div className="mt-10 space-y-8">

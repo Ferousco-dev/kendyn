@@ -13,7 +13,9 @@ const LINKS = [
 
 /**
  * Minimal bar. Transparent over the dark showroom; once the page reaches
- * the light editorial half (#light-start), it inverts to paper.
+ * a light section it inverts to paper. The mobile menu is a full-screen
+ * overlay above the page (z-50) but below the bar (z-60), so the close
+ * button stays on top and tappable.
  */
 export function Navbar({ ready }: { ready: boolean }) {
   const [light, setLight] = useState(false);
@@ -33,67 +35,81 @@ export function Navbar({ ready }: { ready: boolean }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const fg = light ? "text-ink" : "text-paper";
-  const muted = light ? "text-ash hover:text-ink" : "text-smoke hover:text-paper";
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const overLight = light && !open;
+  const fg = overLight ? "text-ink" : "text-paper";
+  const muted = overLight ? "text-ash hover:text-ink" : "text-smoke hover:text-paper";
 
   return (
-    <motion.header
-      initial={{ y: -64, opacity: 0 }}
-      animate={ready ? { y: 0, opacity: 1 } : {}}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        light ? "border-b border-ink/10 bg-paper/92 backdrop-blur-sm" : ""
-      }`}
-    >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-12">
-        <a
-          href="#home"
-          className={`font-display text-sm font-semibold tracking-[0.35em] transition-colors duration-500 ${fg}`}
-        >
-          KENDYN
-        </a>
-
-        <nav className="hidden items-center gap-9 lg:flex">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className={`label transition-colors duration-300 ${muted}`}
-            >
-              {l.label}
-            </a>
-          ))}
+    <>
+      <motion.header
+        initial={{ y: -64, opacity: 0 }}
+        animate={ready ? { y: 0, opacity: 1 } : {}}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+        className={`fixed inset-x-0 top-0 z-[60] transition-colors duration-500 ${
+          overLight ? "border-b border-ink/10 bg-paper/92 backdrop-blur-sm" : ""
+        }`}
+      >
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 lg:px-12">
           <a
-            href={waLink("Hello KENDYN, I'd like a quote.")}
-            target="_blank"
-            rel="noreferrer"
-            className={`label inline-flex items-center gap-2 border-b pb-0.5 transition-colors duration-300 ${
-              light
-                ? "border-ink/40 text-ink hover:border-ink"
-                : "border-paper/40 text-paper hover:border-paper"
-            }`}
+            href="#home"
+            onClick={() => setOpen(false)}
+            className={`font-display text-sm font-semibold tracking-[0.35em] transition-colors duration-500 ${fg}`}
           >
-            Get a quote
-            <span aria-hidden>→</span>
+            KENDYN
           </a>
-        </nav>
 
-        {/* mobile toggle */}
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="-mr-2 flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden"
-        >
-          <span
-            className={`h-px w-6 transition-all duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""} ${light && !open ? "bg-ink" : "bg-paper"}`}
-          />
-          <span
-            className={`h-px w-6 transition-all duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""} ${light && !open ? "bg-ink" : "bg-paper"}`}
-          />
-        </button>
-      </div>
+          <nav className="hidden items-center gap-9 lg:flex">
+            {LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className={`label transition-colors duration-300 ${muted}`}
+              >
+                {l.label}
+              </a>
+            ))}
+            <a
+              href={waLink("Hello KENDYN, I'd like a quote.")}
+              target="_blank"
+              rel="noreferrer"
+              className={`label inline-flex items-center gap-2 border-b pb-0.5 transition-colors duration-300 ${
+                overLight
+                  ? "border-ink/40 text-ink hover:border-ink"
+                  : "border-paper/40 text-paper hover:border-paper"
+              }`}
+            >
+              Get a quote
+              <span aria-hidden>&rarr;</span>
+            </a>
+          </nav>
+
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="-mr-2 flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden"
+          >
+            <span
+              className={`h-px w-6 transition-all duration-300 ${
+                open ? "translate-y-[3.5px] rotate-45 bg-paper" : overLight ? "bg-ink" : "bg-paper"
+              }`}
+            />
+            <span
+              className={`h-px w-6 transition-all duration-300 ${
+                open ? "-translate-y-[3.5px] -rotate-45 bg-paper" : overLight ? "bg-ink" : "bg-paper"
+              }`}
+            />
+          </button>
+        </div>
+      </motion.header>
 
       <AnimatePresence>
         {open && (
@@ -101,8 +117,8 @@ export function Navbar({ ready }: { ready: boolean }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="fixed inset-0 -z-10 flex flex-col justify-center bg-ink px-8 lg:hidden"
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed inset-0 z-50 flex flex-col justify-center bg-ink px-8 lg:hidden"
           >
             {LINKS.map((l, i) => (
               <motion.a
@@ -120,18 +136,18 @@ export function Navbar({ ready }: { ready: boolean }) {
             <motion.a
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.38, duration: 0.5 }}
+              transition={{ delay: 0.34, duration: 0.5 }}
               href={waLink("Hello KENDYN, I'd like a quote.")}
               target="_blank"
               rel="noreferrer"
               onClick={() => setOpen(false)}
               className="label mt-10 inline-flex items-center gap-2 text-paper"
             >
-              Get a quote <span aria-hidden>→</span>
+              Get a quote <span aria-hidden>&rarr;</span>
             </motion.a>
           </motion.nav>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }
