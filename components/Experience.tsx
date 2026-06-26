@@ -106,14 +106,17 @@ export default function Experience() {
       <main className="relative z-10">
         <div ref={trackRef}>
           <Hero ready={ready} isMobile={isMobile} />
-          <StoryChapters isMobile={isMobile} />
+          {/* the cinematic chapters are a desktop device — hidden on mobile */}
+          {!isMobile && <StoryChapters isMobile={isMobile} />}
         </div>
 
-        <Stats />
-        <About />
+        {/* mobile keeps the tight funnel: Products → Services → Contact;
+            Stats, About and Testimonials show on larger screens only */}
+        {!isMobile && <Stats />}
+        {!isMobile && <About />}
         <Products />
         <Services />
-        <Testimonials />
+        {!isMobile && <Testimonials />}
         <Contact />
       </main>
 

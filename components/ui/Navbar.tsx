@@ -120,7 +120,8 @@ export function Navbar({ ready }: { ready: boolean }) {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="fixed inset-0 z-50 flex flex-col justify-center bg-ink px-8 lg:hidden"
           >
-            {LINKS.map((l, i) => (
+            {/* About is hidden on mobile, so drop its link from the menu */}
+            {LINKS.filter((l) => l.href !== "#about").map((l, i) => (
               <motion.a
                 key={l.href}
                 initial={{ opacity: 0, y: 18 }}

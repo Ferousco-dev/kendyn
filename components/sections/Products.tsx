@@ -78,7 +78,7 @@ function ProductCard({
         <button
           type="button"
           onClick={onInspect}
-          className="label border-b border-ink/40 pb-0.5 text-ink transition-colors duration-300 hover:border-ink"
+          className="label hidden border-b border-ink/40 pb-0.5 text-ink transition-colors duration-300 hover:border-ink md:inline-block"
         >
           View
         </button>
