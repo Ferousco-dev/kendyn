@@ -4,14 +4,19 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { PRODUCTS, waLink, type Product, type ProductCategory } from "@/lib/data";
+import {
+  PRODUCTS,
+  waLink,
+  type Product,
+  type ProductCategory,
+} from "@/lib/data";
 import { SectionHeading } from "../ui/SectionHeading";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const ProductViewer = dynamic(
   () => import("../three/ProductViewer").then((m) => m.ProductViewer),
-  { ssr: false }
+  { ssr: false },
 );
 
 const TABS: { key: ProductCategory; label: string }[] = [
@@ -48,10 +53,14 @@ function ProductCard({
         </div>
       )}
       <div className="flex items-baseline justify-between">
-        <h3 className="font-display text-xl font-medium text-ink">{product.name}</h3>
+        <h3 className="font-display text-xl font-medium text-ink">
+          {product.name}
+        </h3>
         <span className="font-mono text-xs text-ash">{product.highlight}</span>
       </div>
-      <p className="mt-2 max-w-[34ch] text-sm leading-relaxed text-ash">{product.tagline}</p>
+      <p className="mt-2 max-w-[34ch] text-sm leading-relaxed text-ash">
+        {product.tagline}
+      </p>
 
       <dl className="mt-8 flex-1">
         {product.specs.map((s) => (
@@ -71,7 +80,7 @@ function ProductCard({
           onClick={onInspect}
           className="label border-b border-ink/40 pb-0.5 text-ink transition-colors duration-300 hover:border-ink"
         >
-          View in 3D
+          View
         </button>
         <a
           href={waLink(`Hello KENDYN, I'm interested in the ${product.name}.`)}
@@ -122,8 +131,12 @@ function InspectorModal({
 
         <div className="flex flex-col justify-center border-t border-ink/10 p-8 lg:border-l lg:border-t-0 lg:p-10">
           <p className="label text-ash">{product.category}</p>
-          <h3 className="mt-3 font-display text-3xl font-medium text-ink">{product.name}</h3>
-          <p className="mt-3 text-sm leading-relaxed text-ash">{product.tagline}</p>
+          <h3 className="mt-3 font-display text-3xl font-medium text-ink">
+            {product.name}
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-ash">
+            {product.tagline}
+          </p>
           <dl className="mt-8">
             {product.specs.map((s) => (
               <div
@@ -136,7 +149,9 @@ function InspectorModal({
             ))}
           </dl>
           <a
-            href={waLink(`Hello KENDYN, please send me a quote for the ${product.name}.`)}
+            href={waLink(
+              `Hello KENDYN, please send me a quote for the ${product.name}.`,
+            )}
             target="_blank"
             rel="noreferrer"
             className="mt-10 inline-block rounded-full bg-ink px-7 py-4 text-center font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-paper transition-colors duration-300 hover:bg-carbon"
@@ -152,7 +167,11 @@ function InspectorModal({
           className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center text-ink transition-opacity hover:opacity-60"
         >
           <svg viewBox="0 0 14 14" className="h-4 w-4" aria-hidden>
-            <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.4" />
+            <path
+              d="M1 1l12 12M13 1L1 13"
+              stroke="currentColor"
+              strokeWidth="1.4"
+            />
           </svg>
         </button>
       </motion.div>
@@ -168,7 +187,11 @@ export function Products() {
   return (
     <section id="products" data-nav="light" className="bg-paper py-28 md:py-40">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-        <SectionHeading index="06" kicker="The catalogue" title="Built for work." />
+        <SectionHeading
+          index="06"
+          kicker="The catalogue"
+          title="Built for work."
+        />
 
         <div
           className="mt-14 flex gap-10 border-b border-ink/15"
@@ -193,10 +216,17 @@ export function Products() {
           ))}
         </div>
 
-        <motion.div layout className="mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          layout
+          className="mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-3"
+        >
           <AnimatePresence mode="popLayout">
             {visible.map((p) => (
-              <ProductCard key={p.id} product={p} onInspect={() => setInspecting(p)} />
+              <ProductCard
+                key={p.id}
+                product={p}
+                onInspect={() => setInspecting(p)}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
@@ -220,9 +250,12 @@ export function Products() {
               />
             </div>
             <figcaption className="mt-4 flex flex-col justify-between gap-1 md:flex-row">
-              <span className="label text-ash">On the shelf, photographed at the showroom</span>
+              <span className="label text-ash">
+                On the shelf, photographed at the showroom
+              </span>
               <span className="font-mono text-xs text-ash">
-                KDD · C-Royal · Synergy · Rocket · GBM · Hi-Force · I.M.P · Gales
+                KDD · C-Royal · Synergy · Rocket · GBM · Hi-Force · I.M.P ·
+                Gales
               </span>
             </figcaption>
           </motion.figure>
@@ -231,7 +264,10 @@ export function Products() {
 
       <AnimatePresence>
         {inspecting && (
-          <InspectorModal product={inspecting} onClose={() => setInspecting(null)} />
+          <InspectorModal
+            product={inspecting}
+            onClose={() => setInspecting(null)}
+          />
         )}
       </AnimatePresence>
     </section>
